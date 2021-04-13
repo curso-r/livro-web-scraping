@@ -1,6 +1,6 @@
 --- 
 title: "A Minimal Book Example"
-author: "Yihui Xie"
+author: "Curso-R"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -10,7 +10,9 @@ link-citations: yes
 description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
 ---
 
-# Prerequisites
+# Intro
+
+Este é nosso livro sobre web scraping. Você vai aprender a rodar coisas como:
 
 ```{r}
 httr::GET("www.google.com")
