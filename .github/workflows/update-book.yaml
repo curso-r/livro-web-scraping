@@ -1,0 +1,46 @@
+on:
+  push:
+    branches: [main,master]
+
+name: deploy
+jobs:
+  render:
+    name: update-shinyapp-book-pkg
+    runs-on: ubuntu-18.04
+    env:
+      GITHUB_PAT: ${{ secrets.PAT }}
+      RENV_PATHS_ROOT: ~/.local/share/renv
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: install deps
+        run: sudo apt install libharfbuzz-dev libfribidi-dev libproj-dev
+      - name: Cache packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: "4.0.2"
+      - uses: r-lib/actions/setup-pandoc@v1
+      - name: Restore packages
+        run: |
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          options(renv.config.repos.override = c("https://packagemanager.rstudio.com/all/__linux__/bionic/1750752", "https://cloud.r-project.org"))
+          renv::restore()
+        shell: Rscript {0}
+      - name: Execute Script
+        run: |
+          rmarkdown::render_site()
+        shell: Rscript {0}
+      - name: Publish
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=docs
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
