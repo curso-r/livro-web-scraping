@@ -1,0 +1,5 @@
+book_filename: "livro-web-scraping"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
