@@ -1,5 +1,5 @@
 --- 
-title: "A Minimal Book Example"
+title: "Web Scraping com exemplos em R"
 author: "Curso-R"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -7,7 +7,7 @@ documentclass: book
 bibliography: [assets/book.bib]
 biblio-style: apalike
 link-citations: yes
-description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+description: "Este livro discute estratégias para construção de programas que acessam e fazem o downloads de páginas da Web. A finalidade principal dos programas desenvolvidos neste livro é construir bases de dados e analisa-las depois, por isso todos os nossos exemplos serão construídos em R."
 ---
 
 # Intro
